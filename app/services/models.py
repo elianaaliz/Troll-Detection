@@ -10,14 +10,12 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 from app.core.messages import NO_VALID_PAYLOAD
 from app.models.payload import TextPayload, payload_to_text
-from app.models.prediction import SentimentPredictionResult
-from app.core.enums import Sentiment
+from app.models.prediction import TrollPredictionResult
+from app.core.enums import Troll
 from app.core.config import (
     KERAS_MODEL,
     TOKENIZER_MODEL,
     SEQUENCE_LENGTH,
-    POSITIVE,
-    NEGATIVE
 )
 
 
@@ -38,11 +36,8 @@ class TrollDetectionModel:
         tokenizer_path = os.path.join(self.model_dir, TOKENIZER_MODEL)
         self.tokenizer = pickle.load(tf.io.gfile.GFile(tokenizer_path, mode="rb"))
 
-    def _decode_label(self, score: float) -> str:
-        return Troll.NEGATIVE.value if score < 0.5 else Troll.POSITIVE.value
-    
-    #def _decode_label(self, score: float) -> str:
-     #label = NEGATIVE if score <= 0.5: label = POSITIVE return label
+    def _decode_label(self, score):
+        return Troll.NO_TROLL if score < 0.5 else Troll.TROLL
 
     def _pre_process(self, payload: TextPayload) -> str:
         logger.debug("Pre-processing payload.")

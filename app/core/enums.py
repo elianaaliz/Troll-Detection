@@ -2,5 +2,5 @@ from enum import Enum
 
 
 class Troll(Enum):
-    NEGATIVE = "NO_TROLL"
-    POSITIVE = "TROLL"
+    TROLL = "TROLL"
+    NO_TROLL = "NO_TROLL"

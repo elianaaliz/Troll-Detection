@@ -1,9 +1,9 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter
 from starlette.requests import Request
 
 from app.models.payload import TextPayload
-from app.models.prediction import TrollDetectionModel
-from app.services.models import TrollPredictionResult
+from app.models.prediction import TrollPredictionResult
+from app.services.models import TrollDetectionModel
 
 router = APIRouter()
 
@@ -13,7 +13,7 @@ def post_predict(
     request: Request, data: TextPayload = None,
 ) -> TrollPredictionResult:
 
-    model:  TrollDetectionModel = request.app.state.model
+    model: TrollDetectionModel = request.app.state.model
     prediction: TrollPredictionResult = model.predict(data)
 
     return prediction
